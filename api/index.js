@@ -1,4 +1,5 @@
 express = require("express");
+graphql=require("graphql")
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
@@ -16,13 +17,15 @@ const run = async () => {
     const database = client.db("test-book");
     const collection = database.collection("books");
     console.log("database connected successfully");
-    server()
+    app.listen(PORT, () => {
+      console.log(`the api is running at http://localhost:${PORT}`);
+    });
   } catch (error){
     console.dir(error);
   }
 };
 run();
 app.get("/", (req, res) => res.send("we are live"));
-const server =()=>{ app.listen(PORT, () => {
-  console.log(`the api is running at http://localhost:${PORT}`);
-});}
+// const server =()=>{ app.listen(PORT, () => {
+//   console.log(`the api is running at http://localhost:${PORT}`);
+// });}

@@ -1,0 +1,26 @@
+type Query{
+    hello:String
+
+
+}
+type Book {
+    id:ID!
+    name:String!
+}
+type Chapter{
+    id:ID!
+    name:String!
+    bookId:String!
+}
+type Section{
+    id:ID!
+    name:String!
+    ChapterId:String!
+
+}
+type Paragraph{
+    id:ID!
+    name:String!
+    ParagraphId:String!
+
+}

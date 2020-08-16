@@ -4,10 +4,13 @@ graphql = require("graphql");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 require("graphql-import-node/register");
-
-const schema = require("./schema.graphql");
-const resolvers = require("./resolvers");
 const { buildSchema } = require("graphql");
+
+const typeDefs = require("./schema");
+// schema=buildSchema(schemaDoc)
+const resolvers = require("./resolvers");
+const { makeExecutableSchema } = require("graphql-tools");
+const schema=makeExecutableSchema({typeDefs,resolvers})
 const app = express();
 // const MyGraphQLSchema=buildSchema(typeDefs,resolvers)
 const {
@@ -30,6 +33,7 @@ const run = async () => {
   }
 };
 run();
+console.log("schema=>",schema)
 app.use(
   "/graphql",
   graphqlHTTP({

@@ -10,7 +10,7 @@ const typeDefs = require("./schema");
 // schema=buildSchema(schemaDoc)
 const resolvers = require("./resolvers");
 const { makeExecutableSchema } = require("graphql-tools");
-const schema=makeExecutableSchema({typeDefs,resolvers})
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 const app = express();
 // const MyGraphQLSchema=buildSchema(typeDefs,resolvers)
 const {
@@ -23,8 +23,23 @@ const run = async () => {
   try {
     await client.connect();
     const database = client.db("test-book");
-    const collection = database.collection("books");
+    // const collection = database.collection("books");
     console.log("database connected successfully");
+    app.use(
+      "/graphql",
+      graphqlHTTP({
+        schema: schema,
+        rootValue: resolvers,
+        graphiql: true,
+        context: database,
+      })
+    );
+    app.get("/", (req, res) => res.send("we are live"));
+    // const server =()=>{ app.listen(PORT, () => {
+      //   console.log(`the api is running at http://localhost:${PORT}`);
+      // });}
+      // console.log("schema=>", schema);
+      // console.log("context.....:",database)
     app.listen(PORT, () => {
       console.log(`the api is running at http://localhost:${PORT}`);
     });
@@ -33,17 +48,3 @@ const run = async () => {
   }
 };
 run();
-console.log("schema=>",schema)
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: resolvers,
-    graphiql: true,
-  })
-);
-
-app.get("/", (req, res) => res.send("we are live"));
-// const server =()=>{ app.listen(PORT, () => {
-//   console.log(`the api is running at http://localhost:${PORT}`);
-// });}

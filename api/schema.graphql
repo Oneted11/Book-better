@@ -1,7 +1,10 @@
 type Query{
     hello:String
-
-
+    books:[Book!]
+    # getBook:(name:String!):Book
+}
+type Mutation{
+    createBook(name:String!):Book
 }
 type Book {
     id:ID!

@@ -31,7 +31,7 @@ const run = async () => {
         schema: schema,
         rootValue: resolvers,
         graphiql: true,
-        context: database,
+        context: {database},
       })
     );
     app.get("/", (req, res) => res.send("we are live"));

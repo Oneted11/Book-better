@@ -10,7 +10,9 @@ const resolvers = {
   Mutation: {
     createBook: async (parent, args, context, info) => {
       console.log(":we got to resolver");
-      const newBook = await context.database
+      console.log("context is=>",context);
+
+      const newBook = await context.Db
         .collection("books")
         .create({ data: { name: args.name } });
       return newBook;
